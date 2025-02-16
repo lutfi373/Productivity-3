@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pomodoro Timer</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #1e1e1e;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    .timer {
+      font-size: 48px;
+      font-weight: bold;
+    }
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+    button {
+      background: #ff6347;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #ff473d;
+    }
+
+    .nav-button {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      border: none;
+      padding: 12px 25px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 30px;
+      box-shadow: 0 0 10px rgba(255, 63, 52, 0.8);
+      transition: all 0.3s ease-in-out;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 20px;
+    }
+
+    .nav-button:hover {
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      box-shadow: 0 0 20px rgba(255, 63, 52, 1), 0 0 40px rgba(255, 63, 52, 0.7);
+      transform: scale(1.05);
+    }
+
+    .nav-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 5px rgba(255, 63, 52, 0.6);
+    }
+
+    /* From Uiverse.io by lukepadiachy */
+    .my-loader {
+      width: 200px;
+      height: 200px;
+      perspective: 1000px;
+      margin: 100px auto;
+    }
+
+    .rubiks-cube {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: my-rotateCube 5s infinite linear;
+    }
+
+    .my-loader .face {
+      position: absolute;
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      height: 100%;
+    }
+
+    .my-loader .face.front {
+      transform: translateZ(100px);
+    }
+    .my-loader .face.back {
+      transform: rotateY(180deg) translateZ(100px);
+    }
+    .my-loader .face.left {
+      transform: rotateY(-90deg) translateZ(100px);
+    }
+    .my-loader .face.right {
+      transform: rotateY(90deg) translateZ(100px);
+    }
+    .my-loader .face.top {
+      transform: rotateX(90deg) translateZ(100px);
+    }
+    .my-loader .face.bottom {
+      transform: rotateX(-90deg) translateZ(100px);
+    }
+
+    .my-loader .cube {
+      width: calc(100% / 3);
+      height: calc(100% / 3);
+      box-sizing: border-box;
+      border: 1px solid #000;
+    }
+
+    @keyframes my-rotateCube {
+      0% {
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+      100% {
+        transform: rotateX(360deg) rotateY(360deg);
+      }
+    }
+
+  </style>
+</head>
+<body>
+<!-- From Uiverse.io by lukepadiachy -->
+<div class="my-loader">
+  <div class="rubiks-cube">
+    <div class="face front">
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+    </div>
+
+    <div class="face back">
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+    </div>
+    <div class="face left">
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+    </div>
+    <div class="face right">
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+    </div>
+    <div class="face top">
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+    </div>
+    <div class="face bottom">
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+      <div style="background: #ffeb3b;" class="cube"></div>
+      <div style="background: #4caf50;" class="cube"></div>
+      <div style="background: #2196f3;" class="cube"></div>
+      <div style="background: #ffffff;" class="cube"></div>
+      <div style="background: #ff3d00;" class="cube"></div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+  <h1>Pomodoro Timer❤️</h1>
+  <div class="timer" id="timer">25:00</div>
+  <div class="buttons">
+    <button onclick="startTimer()">Start</button>
+    <button onclick="pauseTimer()">Pause</button>
+    <button onclick="resetTimer()">Reset</button>
+    <button onclick="fastForward()">Fast Forward</button>
+  </div>
+  <h3 id="pomodoroCount">Pomodoros Completed: 0</h3>
+</div>
+
+
+</div>
+
+<audio id="alarmSound">
+  <source src="sounds/Hotel bell ringing - Sounds effect.mp3" type="audio/mpeg">
+  <source src="sounds/Hotel bell ringing - Sounds effect.wav" type="audio/wav">
+</audio>
+
+<div class="nav-buttons">
+  <button class="nav-button" onclick="goToFidget()">🎮 Fidget</button>
+  <button class="nav-button" onclick="goToToDo()">📋 To-do List</button>
+</div>
+
+<script>
+  let timer;
+
+  let running = false;
+
+  let isBreak = false;
+  const alarmSound = document.getElementById('alarmSound');
+
+  let timeLeft = localStorage.getItem("timeLeft") ? parseInt(localStorage.getItem("timeLeft")): 1500;
+  let pomodoroCount = localStorage.getItem("pomodoroCount") ? parseInt(localStorage.getItem("pomodoroCount")) : 0;
+  let timerRunning = localStorage.getItem("timerRunning") === "true";
+
+  if (timerRunning) {
+    startTimer();
+  }
+
+  function startTimer() {
+    if (!running) {
+      running = true;
+      localStorage.setItem("timerRunning", "true");
+      timer = setInterval(() => {
+        if (timeLeft > 0) {
+          timeLeft--;
+          localStorage.setItem("timeLeft", timeLeft);
+          updateTimerDisplay();
+        } else {
+          clearInterval(timer);
+          running = false;
+          alarmSound.play();
+
+          if (!isBreak) {
+            pomodoroCount++;
+            document.getElementById("pomodoroCount").textContent = `Pomodoros Completed: ${pomodoroCount}`;
+            alert("Pomodoro Completed! Starting a 5-minute break.");
+            timeLeft = 300; // 5-minute break
+            isBreak = true;
+            startTimer();
+          } else {
+            alert("Break over! Start your next Pomodoro.");
+            timeLeft = 1500;
+            isBreak = false;
+            updateTimerDisplay();
+          }
+        }
+      }, 1000);
+    }
+  }
+
+  function pauseTimer() {
+    clearInterval(timer);
+    running = false;
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timeLeft = 1500;
+    running = false;
+    isBreak = false;
+    updateTimerDisplay();
+  }
+
+  function fastForward() {
+    timeLeft = Math.max(0, timeLeft - 300); // Skip 5 minutes
+    updateTimerDisplay();
+  }
+
+  function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById("timer").textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+
+  function goToFidget(){
+    window.location.href = "fidget.html";
+  }
+  function goToToDo(){
+    window.location.href = "To-do-page.html"
+  }
+
+
+  // Initialize Timer Display
+  updateTimerDisplay();
+</script>
+</body>
+</html>

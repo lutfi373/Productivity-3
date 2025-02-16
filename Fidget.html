@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🕹️Chill Corner</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #1e1e1e;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      color: white;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px; /* Increased spacing */
+    }
+    .title {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* First Switch (Fidget Button) */
+    input[type="checkbox"] {
+      display: none;
+    }
+    .on,.off {
+      position: absolute;
+      text-align: center;
+      text-shadow: 1px 1px 1px black;
+      width: 100%;
+    }
+
+    .on {
+      color: #fff;
+      top: 10px;
+      transition: all 0.1s;
+      font-family: sans-serif
+    }
+
+    .off {
+      color: #636161;
+      bottom: 5px;
+      transition: all 0.1s;
+      transform: scaleY(0.85);
+    }
+
+    .but {
+      background-color: #000;
+      border-radius: 400px 400px 400px 400px / 400px 400px 300px 300px;
+      border-bottom-width: 0px;
+      box-shadow: inset 8px 6px 5px -7px rgba(0,0,0,1)
+      ,inset -8px 6px 5px -7px rgba(0,0,0,1)
+      ,inset 0 -3px 2px -2px rgba(200,200,200,.5)
+      ,0 3px 3px -2px rgba(0,0,0,1)
+      ,inset 0 -230px 60px -200px rgba(255,255,255,.2)
+      ,inset 0 220px 40px -200px rgba(0,0,0,.3);
+      display: block;
+      font-size: 17px;
+      height: 60px;
+      position: relative;
+      transition: all 0.2s;
+      width: 40px;
+    }
+
+    .back {
+      background-color: #000;
+      background-image: -webkit-linear-gradient(0deg, transparent 30%, transparent 65%)
+      ,-webkit-linear-gradient(0deg, rgba(245, 245, 245, 0) 30%, rgba(150,150,150,.1) 50%, rgba(150,150,150,0) 70%);
+      border-radius: 115px;
+      box-sizing: border-box;
+      height: 85px;
+      padding: 4px 4px;
+      transition: all 0.2s;
+      width: 50px;
+    }
+
+    input:checked + .back .on,input:checked + .back .off {
+      text-shadow: 1px 1px 1px black;
+    }
+
+    input:checked + .back .on {
+      color: rgb(141, 141, 141);
+      top: 10px;
+      transform: scaleY(0.85);
+    }
+
+    input:checked + .back .off {
+      color: #fff;
+      bottom: 5px;
+      transform: scaleY(1);
+    }
+
+    input:checked + .back .but {
+      background: #232323;
+      background-image: -webkit-radial-gradient(circle at 55% 18%,rgba(0,0,0,.3) ,rgba(0,0,0,0));
+      border-radius: 410px 410px 410px 410px / 310px 310px 410px 410px;
+      box-shadow: inset 8px -4px 5px -7px rgba(0,0,0,1)
+      ,inset -8px -4px 5px -7px rgba(0,0,0,1)
+      , 0 -3px 8px -4px rgba(250,250,250,.4)
+      ,inset 0 3px 4px -2px rgba(10,10,10,1)
+      ,inset 0 280px 40px -200px rgba(0,0,0,.2)
+      ,inset 0 -200px 40px -200px rgba(180,180,180,.2);
+      margin-top: 20px;
+    }
+
+    input:checked + .back {
+      background-image: -webkit-linear-gradient(90deg, black 30%, transparent 65%)
+      ,-webkit-linear-gradient(180deg, rgba(250,250,250,0) 0%, rgba(250,250,250,.4) 50%, rgba(150,150,150,0) 100%);
+      box-shadow: 28px 28px 28px -28px rgba(0,0,0,.1)
+      ,-28px 28px 28px -22px rgba(0,0,0,.1)
+      ,0 30px 30px 0px rgba(0,0,0,.2)
+      ,inset 0 1px 2px 0 rgba(0,0,0,.6);
+      padding: 2px 4px;
+    }
+
+    .l,.r {
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .round,#onoff,.back,.but,.on,.off {
+      user-select: none;
+    }
+
+    /* Second Switch (Toggle) */
+
+    input[type="checkbox"] {
+      display: none;
+    }
+
+    .switch {
+      font-size: 17px;
+      position: relative;
+      display: inline-block;
+      width: 5em;
+      height: 2.5em;
+      user-select: none;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch .cb {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .toggle {
+      position: absolute;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      background-color: #373737;
+      border-radius: 0.1em;
+      transition: 0.4s;
+      text-transform: uppercase;
+      font-weight: 700;
+      overflow: hidden;
+      box-shadow: -0.3em 0 0 0 #373737, -0.3em 0.3em 0 0 #373737,
+      0.3em 0 0 0 #373737, 0.3em 0.3em 0 0 #373737, 0 0.3em 0 0 #373737;
+    }
+
+    .toggle > .left {
+      position: absolute;
+      display: flex;
+      width: 50%;
+      height: 88%;
+      background-color: #f3f3f3;
+      color: #373737;
+      left: 0;
+      bottom: 0;
+      align-items: center;
+      justify-content: center;
+      transform-origin: right;
+      transform: rotateX(10deg);
+      transform-style: preserve-3d;
+      transition: all 150ms;
+    }
+
+    .left::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: rgb(206, 206, 206);
+      transform-origin: center left;
+      transform: rotateY(90deg);
+    }
+
+    .left::after {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: rgb(112, 112, 112);
+      transform-origin: center bottom;
+      transform: rotateX(90deg);
+    }
+
+    .toggle > .right {
+      position: absolute;
+      display: flex;
+      width: 50%;
+      height: 88%;
+      background-color: #f3f3f3;
+      color: rgb(206, 206, 206);
+      right: 1px;
+      bottom: 0;
+      align-items: center;
+      justify-content: center;
+      transform-origin: left;
+      transform: rotateX(10deg) rotateY(-45deg);
+      transform-style: preserve-3d;
+      transition: all 150ms;
+    }
+
+    .right::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: rgb(206, 206, 206);
+      transform-origin: center right;
+      transform: rotateY(-90deg);
+    }
+
+    .right::after {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 100%;
+      background-color: rgb(112, 112, 112);
+      transform-origin: center bottom;
+      transform: rotateX(90deg);
+    }
+
+    .switch input:checked + .toggle > .left {
+      transform: rotateX(10deg) rotateY(45deg);
+      color: rgb(206, 206, 206);
+    }
+
+    .switch input:checked + .toggle > .right {
+      transform: rotateX(10deg) rotateY(0deg);
+      color: #487bdb;
+    }
+    .nav-button {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      border: none;
+      padding: 12px 25px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 30px;
+      box-shadow: 0 0 10px rgba(255, 63, 52, 0.8);
+      transition: all 0.3s ease-in-out;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav-button:hover {
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
+      box-shadow: 0 0 20px rgba(255, 63, 52, 1), 0 0 40px rgba(255, 63, 52, 0.7);
+      transform: scale(1.05);
+    }
+
+    .nav-button:active {
+      transform: scale(0.95);
+      box-shadow: 0 0 5px rgba(255, 63, 52, 0.6);
+    }
+
+
+
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="title">🕹️Stress Button Corner</div>
+
+  <!-- First Switch (Fidget Button) -->
+  <label>
+    <input type="checkbox" id="onoff" onclick="playSound()">
+    <div class="back">
+      <label for="onoff" class="but">
+        <span class="on">0</span>
+        <span class="off">I</span>
+      </label>
+    </div>
+  </label>
+
+  <!-- Second Switch (Toggle) -->
+  <label class="switch">
+    <input class="cb" type="checkbox" onclick = "playSound()" />
+    <span class="toggle">
+        <span class="left">off</span>
+        <span class="right">on</span>
+      </span>
+  </label>
+
+
+
+  <div class="nav-buttons">
+    <button class="nav-button" onclick="goToToDo()">📋 To-do List</button>
+    <button class="nav-button" onclick="goToPomodoro()">⏳ Pomodoro</button>
+  </div>
+
+  <audio id="toggleSound" preload="auto">
+    <source src="sounds/minecraft button.mp3" type="audio/mpeg">
+    <source src="sounds/minecraft button.wav" type="audio/wav">
+  </audio>
+
+  <script>
+    function goToPomodoro() {
+      window.location.href = "pomodoro.html"; // Change this to your actual next page URL
+    }
+    function goToToDo(){
+      window.location.href = "To-do-page.html";
+    }
+
+    function playSound() {
+      let sound = document.getElementById("toggleSound");
+      sound.currentTime = 0; // Reset audio to start immediately
+      sound.play(); // Play sound
+    }
+
+  </script>
+</div>
+</body>
+</html>
